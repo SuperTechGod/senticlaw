@@ -78,12 +78,13 @@ All events are logged to SQLite (`senticlaw_audit.db`):
 
 ## Alert Integration
 
-Wire up instant alerts via OpenClaw system events:
+Wire up instant alerts to any channel OpenClaw supports:
 
 ```python
 sc = SentiClaw(config={
     "owner_ids": {"discord": ["YOUR_ID"]},
-    "alert_channel_id": "YOUR_DISCORD_CHANNEL_ID",  # e.g. #security-alerts
+    "alert_channel":    "discord",    # discord | telegram | slack | whatsapp
+    "alert_channel_id": "YOUR_CHANNEL_OR_CHAT_ID",
 })
 ```
 

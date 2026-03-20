@@ -83,8 +83,9 @@ sc = SentiClaw(config=SentiClawConfig(
     outbound_block_api_keys=True,
     outbound_block_file_paths=True,
 
-    # Alerts
-    alert_channel_id="DISCORD_CHANNEL_ID",   # instant threat alerts
+    # Alerts — discord | telegram | slack | whatsapp
+    alert_channel="discord",
+    alert_channel_id="YOUR_CHANNEL_ID",
 
     # Audit
     audit_db_path="senticlaw_audit.db",
@@ -95,7 +96,7 @@ sc = SentiClaw(config=SentiClawConfig(
 
 ## Instant Threat Alerts
 
-When a threat is detected, SentiClaw fires an immediate alert to your Discord security channel:
+When a threat is detected, SentiClaw fires an immediate alert to your preferred channel:
 
 ```
 🚨 SentiClaw Alert [09:34:17]
@@ -103,7 +104,33 @@ INJECTION ATTEMPT
 Channel: DISCORD | Session: discord_999 | Sender: 999999
 ```
 
-Set `alert_channel_id` to your `#security-alerts` channel ID to enable.
+Supports any channel OpenClaw has configured:
+
+```python
+# Discord
+sc = SentiClaw(config={
+    "alert_channel":    "discord",
+    "alert_channel_id": "YOUR_CHANNEL_ID",
+})
+
+# Telegram
+sc = SentiClaw(config={
+    "alert_channel":    "telegram",
+    "alert_channel_id": "YOUR_CHAT_ID",
+})
+
+# Slack
+sc = SentiClaw(config={
+    "alert_channel":    "slack",
+    "alert_channel_id": "YOUR_CHANNEL_ID",
+})
+
+# WhatsApp
+sc = SentiClaw(config={
+    "alert_channel":    "whatsapp",
+    "alert_channel_id": "+12035551234",
+})
+```
 
 ---
 

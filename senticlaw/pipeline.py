@@ -20,7 +20,7 @@ class SentiClawPipeline:
     def __init__(self, config: SentiClawConfig):
         self.cfg        = config
         self.auditor    = AuditLogger(config.audit_db_path, config.audit_enabled,
-                                      config.alert_channel_id)
+                                      config.alert_channel, config.alert_channel_id)
         self.registry   = TrustedSenderRegistry(config.owner_ids, config.trusted_senders)
         self.governance = GovernanceEngine(config)
 

@@ -44,8 +44,13 @@ class SentiClawConfig:
     allowed_tools:      list = field(default_factory=list)
     block_private_urls: bool = True
 
-    # Alerts
-    alert_channel_id: str = ""   # Discord channel ID for instant threat alerts
+    # Alerts — set alert_channel to your platform, alert_channel_id to your target
+    # discord:  channel ID (e.g. "1234567890")
+    # telegram: chat ID   (e.g. "8496230457")
+    # slack:    channel ID (e.g. "C12345678")
+    # whatsapp: phone number (e.g. "+12035551234")
+    alert_channel:    str = "discord"   # discord | telegram | slack | whatsapp
+    alert_channel_id: str = ""          # target ID/number for alerts
 
     # Audit
     audit_db_path: str  = "senticlaw_audit.db"

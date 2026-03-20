@@ -8,9 +8,12 @@ _IMMEDIATE = {"injection_attempt", "spoofing_attempt", "outbound_blocked"}
 
 class AuditLogger:
     def __init__(self, db_path: str = "senticlaw_audit.db",
-                 enabled: bool = True, alert_channel_id: str = ""):
+                 enabled: bool = True,
+                 alert_channel: str = "discord",
+                 alert_channel_id: str = ""):
         self.db_path          = db_path
         self.enabled          = enabled
+        self.alert_channel    = alert_channel
         self.alert_channel_id = alert_channel_id
         if enabled:
             self._init()
@@ -56,14 +59,28 @@ class AuditLogger:
         ch  = channel.upper() if channel else "?"
         msg = (
             f"🚨 SentiClaw Alert [{ts}]\n"
-            f"{event_type.replace('_',' ').upper()}\n"
+            f"{event_type.replace('_', ' ').upper()}\n"
             f"Channel: {ch} | Session: {session_id} | Sender: {sender_id}"
         )
+
+        alert_ch = self.alert_channel.lower()
+        target   = self.alert_channel_id
+
+        # Build --to flag based on channel type
+        if alert_ch == "discord":
+            to_arg = f"channel:{target}"
+        elif alert_ch in ("telegram", "whatsapp", "signal"):
+            to_arg = target          # chat ID or phone number
+        elif alert_ch == "slack":
+            to_arg = f"channel:{target}"
+        else:
+            to_arg = target          # generic fallback
+
         try:
             subprocess.run(
                 ["openclaw", "message", "send",
-                 "--channel", "discord",
-                 "--to", f"channel:{self.alert_channel_id}",
+                 "--channel", alert_ch,
+                 "--to", to_arg,
                  "--message", msg],
                 capture_output=True, timeout=10,
             )
