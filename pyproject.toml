@@ -21,7 +21,7 @@ classifiers = [
 
 [project.urls]
 Homepage   = "https://phraimwork.com"
-Repository = "https://github.com/phraimwork/senticlaw"
+Repository = "https://github.com/SuperTechGod/senticlaw"
 
 [tool.setuptools.packages.find]
 where   = ["."]
